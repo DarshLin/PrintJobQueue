@@ -1,0 +1,170 @@
+/*
+  Darsh Lin
+  April 20, 2016
+  CSPC 2430
+  Version 1
+*/
+
+using namespace std;
+
+#include "Queue.h"
+
+//Constructor Definition
+Queue::Queue()
+  : front(0), rear(0)
+{}
+
+//Copy Constructor Definition
+Queue::Queue(const Queue & original) {
+  front = 0;
+  rear = 0;
+  if(!original.empty()) { //not sure if the two initialized as 0 
+	front = new Queue::Node(original.Front());
+	rear = new Queue::Node (original.Rear());
+	Queue::NodePointer frontPtr = front;
+	Queue::NodePointer copyPtr = rear;
+	Queue::NodePointer originalPtr = rear->next;
+
+	while(copyPtr != frontPtr) {
+	  copyPtr = copyPtr->next;
+	  originalPtr = originalPtr->next;
+	}//End of moving to front
+	while(copyPtr != rear) {
+	  copyPtr -> = new Queue::Node(originalPtr->jobID,
+								   originalPtr->filename,
+								   originalPtr->userID,
+								   originalPtr->printTime);
+	  copyPtr = copyPtr->next;
+	  originalPtr = originalPtr->next;
+	}//End of copy while loop
+	else {
+	  cerr << "Cannot copy an empty Queue" << endl;
+	}
+  }//End of empty check
+}//End of copy constructor
+
+//Queue Destructor
+Queue::~Queue() {
+  rearPtr = rear;
+  nextPtr = rear->next;
+  frontPtr = front;
+
+  while(rearPtr != frontPtr) {
+	rearPtr = nextPtr;
+  }//End of movement to front
+  frontPtr = 0;
+  delete frontPtr;
+
+  while(rearPtr != 0) {
+	delete rearPtr;
+	rearPtr = nextPtr;
+  }//End of while loop to delete
+  delete nextPtr; //might as well
+}//End of Destructor
+
+//Overloaded Assignment Operator
+Queue & Queue::operator= (const Queue & original) {
+  front = 0;
+  rear = 0;
+
+  if(original.empty()) { return * this;}
+
+  if(this != &original) {
+	this.~Queue();
+	front = original.Front();
+	rear = original.Rear();
+	this->front = front;
+	this->rear = rear;
+	tRear = this->rear;
+
+	Queue::NodePointer originalPtr = rear;
+	Queue::NodePointer nextPtr = rear->next;
+
+	while(tRear != this->front) {
+	  tRear = nextPtr;
+	}//End of moving ot front
+	while(tRear != rear) {
+	  tRear->next = new Queue::Node(originalPtr->jobID,
+									originalPtr->filename,
+									originalPtr->userID,
+									originalPtr->printTime);
+	  tRear = nextPtr;
+	  originalPtr = originalPtr-next;
+	}//End of copy loop
+	return *this;
+  }//End of first node copy and conditional to assignment op
+}//End of Overloaded Assignment Operator
+
+//Empty check function
+bool Queue::empty() {
+  return (front == 0);
+}
+
+//Enqueue function
+void Queue::Enqueue(const QElement & jobID,
+					const QElement & filename,
+					const QElement & userID,
+					const QElement & printTime) {
+  if(empty()) {
+	front = new Queue::Node(jobID, filename, userID, printTime, front);
+	rear = front;
+  }//End of checking to see if empty
+  else {//If not empty
+	rear = new Queue::Node(jobID, filename, userID, printTime, rear);
+	if (rear->next = NULL) {
+	  rear->next = front;
+	}//End of looping to the front from rear
+  }//End of enqueue on non empty
+}//End of Enqueue
+
+//Dequeue function
+void Queue::Dequeue() {
+  if(!empty()) {
+	Queue::NodePointer fPtr = front;
+	front = front->next;
+	delete fPtr;
+  }//End of non empty dequeue
+  else {//empty
+	cerr << "Cannot delete nothing" << endl;
+  }//End of else (empty)
+}//End of Dequeue
+
+//Print Queue function
+void Queue::printQ(ostream & out) const {
+  rearPtr = rear;
+
+  while(rearPtr != front) {
+	rearPtr = rearPtr-> next;
+  }//End of moving to front
+
+  NodePointer ptr;
+
+  for (ptr = rearPtr; ptr != rear; ptr = ptr->next) {
+	out << ptr->jobID << " | " << ptr->filename <<
+	  " | " << ptr->userID << " | " << ptr->printTime << endl;
+  }//End of for loop to move everything to out
+  
+}//End of printQ
+
+//Front element
+QElement Queue::Front() {
+  if(!empty()) {return front->printID;}
+  else {
+	cerr << "Queue is Empty, returning garbage!"
+	  return *(new QElement);
+  }
+  
+}//End of front()
+
+//Rear element
+QElement Queue::Rear() {
+  if(!empty()) { return rear->printID; }
+  else {
+	cerr << "Queue is Empty, returning garbage!"
+	  return * (new QElement);
+  }//End of rear on empty
+}//End of Rear()
+
+
+
+
