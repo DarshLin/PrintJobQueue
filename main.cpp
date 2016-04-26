@@ -31,43 +31,17 @@ int main() {
   cout << "How many elements to add to the queue? ";
   int numItems;
   cin >> numItems;
-  string j = "Hello ";
-  string k = "My Name ";
-  string l = " is awesome ";
-  string m = " sir ";
   for(int i = 1; i <= numItems; i++){
-	q.Enqueue(j,k,l,m);
+	q.Enqueue(i);
   }
-  cout << "Queue empty? " << q.empty() << endl;
-
-  cout << "Contents of the queue q (via print): \n";
-  print(q); cout << endl;
-  cout << "Check that the queue wasn't modified by print: \n";
-  q.printQ(cout); cout << endl;
-
-  Queue t, u;
-  t= u = q;
-  cout << "Contents of queues t and u after t=u=q (via print): \n";
-  cout << "u:\n"; print(u); cout << endl;
-  cout << "u:\n"; print(t); cout << endl;
   
-  cout << "Front value in q: " << q.Front() << endl;
-  cout << "Rear value in q: " << q.Rear() << endl;
 
-  Queue copyt = t;
-  cout << "Testing Copy Constructor. \n";
-  cout << "t: "; print(t); cout <<endl;
-  cout << "copyt: "; print(copyt); cout << endl;
-
-  // while(!t.empty()) {
-  // 	cout << "Dequeueing t: " << t.Front() << endl;
-  // 	t.Dequeue();
-  // }
-  // cout << "Queue t empty? " << t.empty() << endl;
-  // cout << "\nNow try to retrieve front value from t. " << endl;
-  // cout << "Front value in t: " << t.Front() << endl;
-  // cout << "\nTrying to dequque t: << endl";
-  // t.Dequeue();
+  cout <<"Let's do a dequeue" <<endl;
+  for (int j = 0; j < numItems - 2;j++) {
+	q.Dequeue();
+  }
+  cout <<"What is the tail? " << endl;
+  cout <<q.Rear() << endl;
   
   return 0;
 }

@@ -15,7 +15,7 @@ using namespace std;
 #ifndef QUEUE
 #define QUEUE
 
-typedef string QElement;
+typedef int QElement;
 
 class Queue
 {
@@ -55,10 +55,7 @@ class Queue
 	Postcondition: Returns true if queue is empty and false otherwise.
   */
 
-  void Enqueue(const QElement & jobID,
-			   const QElement & filename,
-			   const QElement & userID,
-			   const QElement & printTime);
+  void Enqueue(const QElement & data);
   /*
 	Enqueue function adds a value to the queue.
 	Precondition: the four values are added to the queue
@@ -108,31 +105,30 @@ class Queue
   class Node
   {
   public:
-	QElement jobID, filename, userID,printTime;
-	QElement printJob[4] {jobID, filename, userID, printTime};
+	QElement data; //filename, userID,printTime;
+	//QElement printJob[4]{jobID, filename, userID, printTime};
 	Node * next;
 
-	Node(QElement jobIDVal, QElement filenameVal,
-		 QElement userIDVal, QElement printTimeVal,
-		 Node * link = 0) // not sure on the 0 here, might come back to this
+	Node(QElement value, Node* link) // not sure on the 0 here, might come back to this
 	  /*
 		Precondition: the four values are received
 		Postcondition: A Node is constructed with the values in its
 		four data parts and it's next part is set to link which is
 		defaulted to 0
 	  */
-	  { jobID = jobIDVal;
-		filename = filenameVal;
-		userID = userIDVal;
-		printTime = printTimeVal;
-		next = link; }
+	  {
+		data = value;
+		next = link;
+		//filename = printJobVal[1];
+		//userID = printJobVal[2];
+		//printTime = printJobVal[3];
+	  }
   };
 
   typedef Node * NodePointer; /* this is to make node pointers without having
 								 to use the confusing asterisks */
   //Data members
-  NodePointer front;
-  NodePointer rear;
+  NodePointer tail;
 };//End of Queue class declaration
 
 #endif
